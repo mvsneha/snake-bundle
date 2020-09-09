@@ -82,7 +82,7 @@ class Board
     {
         if ($this->newGoal) {
             $cursor->moveToPosition($this->goal->x, $this->goal->y);
-            $output->write('<goal>*</goal>');
+            $output->write('<goal>🌟</goal>');
             $this->newGoal = false;
         }
         $this->snake->tick($output, $cursor);

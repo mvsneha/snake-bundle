@@ -2,6 +2,7 @@
 
 namespace Dbu\SnakeBundle\Game;
 
+use Symfony\Component\Console\Color;
 use Symfony\Component\Console\Cursor;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -34,11 +35,17 @@ class Snake
      */
     private $grow = 2;
 
+    /**
+     * @var int
+     */
+    private $color;
+
     public function __construct(Board $board, Coordinate $start)
     {
         $this->board = $board;
         $this->head = clone $start;
         $this->tail = [clone $start];
+        $this->color = rand(0, 255);
     }
 
     public function setDirection(string $direction): void
@@ -74,7 +81,7 @@ class Snake
         $this->grow += $this->board->enter($this->head);
 
         $cursor->moveToPosition($this->head->x, $this->head->y);
-        $output->write('<snake>█</snake>');
+        $output->write($this->rainbowColor()->apply(' '));
         $this->tail[] = clone $this->head;
         if ($this->grow > 0) {
             $this->grow--;
@@ -89,5 +96,30 @@ class Snake
     public function addGrow(int $amount): void
     {
         $this->grow += $amount;
+    }
+
+    private function rainbowColor(): Color {
+        ++$this->color;
+        if (256 === $this->color) {
+            $this->color = 1;
+        }
+        $h = (int) ($this->color / 43);
+        $f = (int) ($this->color - 43 * $h);
+        $t = (int) ($f * 255 / 43);
+        $q = 255 - $t;
+
+        if ($h == 0) {
+            return new Color('', sprintf('#FF%02x00', $t));
+        } elseif ($h == 1) {
+            return new Color('', sprintf('#%02xFF00', $q));
+        } elseif ($h == 2) {
+            return new Color('', sprintf('#00FF%02x', $t));
+        } elseif ($h == 3) {
+            return new Color('', sprintf('#00%02xFF', $q));
+        } elseif ($h == 4) {
+            return new Color('', sprintf('#%02x00FF', $t));
+        } elseif ($h == 5) {
+            return new Color('', sprintf('#FF00%02x', $q));
+        }
     }
 }

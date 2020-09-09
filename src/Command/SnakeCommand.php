@@ -35,7 +35,7 @@ class SnakeCommand extends Command
         $cursor->hide();
 
         $output->getFormatter()->setStyle('snake', new OutputFormatterStyle('green', 'black', ['bold']));
-        $output->getFormatter()->setStyle('goal', new OutputFormatterStyle('magenta', 'black', ['bold']));
+        $output->getFormatter()->setStyle('goal', new OutputFormatterStyle('yellow', 'black'));
         $output->getFormatter()->setStyle('background', new OutputFormatterStyle('cyan', 'black'));
         $output->getFormatter()->setStyle('crash', new OutputFormatterStyle('red', 'black', ['bold', 'blink']));
 

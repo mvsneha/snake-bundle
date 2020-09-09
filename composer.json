@@ -9,11 +9,13 @@
             "email": "mail@davidbu.ch"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "symfony/console": "^5.1"
+        "symfony/console": "^5.2"
     },
     "require-dev": {
         "symfony/framework-bundle": "^5.1",

@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+use Dbu\SnakeBundle\Command\SnakeCommand;
+use Symfony\Component\Console\Application;
+
+require __DIR__.'/vendor/autoload.php';
+
+$app = new Application();
+$app->add(new SnakeCommand());
+$app->setDefaultCommand('game:snake');
+$app->run();

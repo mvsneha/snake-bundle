@@ -74,7 +74,7 @@ class Game
             $cursor->moveToPosition(0, $this->height);
             $output->write(' Score: '.$this->board->getScore());
 
-            $speedup = min(1, $this->board->getScore() / 10);
+            $speedup = min(1, $this->board->getScore() / 3);
 
             $tickDuration = self::TICK_DURATION - self::TICK_DURATION/2 * $speedup;
             $leftover = $tickDuration - (microtime(true) - $now);
@@ -95,16 +95,16 @@ class Game
 
         for ($i = 6; $i < 18; $i += 2) {
             $this->board->print($output, $cursor, '                                                                              ', new Coordinate(2, $i));
-            usleep(200000);
+            usleep(30000);
         }
 
         for ($i = 7; $i < 17; $i += 2) {
             $this->board->print($output, $cursor, '                                                                              ', new Coordinate(2, $i));
-            usleep(200000);
+            usleep(30000);
         }
         $this->board->print($output, $cursor, '                                                                              ', new Coordinate(2, 17));
         $this->board->print($output, $cursor, '                                                                              ', new Coordinate(2, 19));
 
-        sleep(1);
+        usleep(100000);
     }
 }
