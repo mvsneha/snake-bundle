@@ -14,6 +14,15 @@ class SnakeCommand extends Command
 {
     protected static $defaultName = 'game:snake';
 
+    private $game;
+
+    public function __construct(Game $game = null)
+    {
+        $this->game = $game ?: new Game(80, 24);
+
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this->setDescription('Run the snake game in Symfony console (only one more time...)');
@@ -39,8 +48,7 @@ class SnakeCommand extends Command
         $output->getFormatter()->setStyle('background', new OutputFormatterStyle('cyan', 'black'));
         $output->getFormatter()->setStyle('crash', new OutputFormatterStyle('red', 'black', ['bold', 'blink']));
 
-        $game = new Game(80, 24);
-        $game->run($inputStream, $output, $cursor);
+        $this->game->run($inputStream, $output, $cursor);
 
         $cursor->show();
         stream_set_blocking($inputStream, TRUE);

@@ -38,12 +38,20 @@ class Game
      */
     private $height;
 
+    private $cheat = false;
+
     public function __construct(int $width, int $height)
     {
         $this->board = new Board($width, $height);
         $this->snake = new Snake($this->board, new Coordinate(40, 12));
         $this->board->addSnake($this->snake);
         $this->height = $height;
+    }
+
+    public function cheat()
+    {
+        $this->cheat = true;
+        $this->board->cheat();
     }
 
     public function run($inputStream, OutputInterface $output, Cursor $cursor): void
@@ -75,6 +83,10 @@ class Game
             $output->write(' Score: '.$this->board->getScore());
 
             $speedup = min(1, $this->board->getScore() / 3);
+
+            if ($this->cheat) {
+                $output->write('    <crash> Cheat mode enabled </>');
+            }
 
             $tickDuration = self::TICK_DURATION - self::TICK_DURATION/2 * $speedup;
             $leftover = $tickDuration - (microtime(true) - $now);

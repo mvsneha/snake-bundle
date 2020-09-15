@@ -35,10 +35,17 @@ class Board
      */
     private $newGoal;
 
+    private $cheat = false;
+
     public function __construct(int $width, int $height)
     {
         $this->width = $width;
         $this->height = $height;
+    }
+
+    public function cheat()
+    {
+        $this->cheat = true;
     }
 
     public function getScore(): int
@@ -91,7 +98,9 @@ class Board
     public function enter(Coordinate $coordinate): int
     {
         if (!$this->allowed($coordinate)) {
-            throw new CollisionException($coordinate);
+            if (!$this->cheat) {
+                throw new CollisionException($coordinate);
+            }
         }
         $this->board[$coordinate->x][$coordinate->y] = 1;
 
@@ -129,6 +138,5 @@ class Board
         } while (!$this->allowed($this->goal));
 
         $this->newGoal = true;
-
     }
 }
